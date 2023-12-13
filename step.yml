@@ -44,13 +44,13 @@ inputs:
   - app_slug: $BITRISE_APP_SLUG
     opts:
       title: "Bitrise App Slug"
-      summary: Bitrise App Slug. You can view your App's Slug on the `Code` tab of the app.
+      summary: Bitrise App Slug. You can view your App's Slug from your Bitrise Dashboard. Once on the app's page, go to your browser's address bar. Find the hexadecimal number after the /app/ section of the URL. That is your app slug.
       is_expand: true
       is_required: true
   - api_token:
     opts:
       title: "Build trigger API Token"
-      summary: Build trigger API Token. You can view and regenerate your App's API Token on the `Code` tab of the app.
+      summary: Build trigger API Token. You can view and regenerate your Personal Access Token in the Security tab of your Account settings.
       is_expand: true
       is_required: true
       is_sensitive: true
