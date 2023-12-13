@@ -33,7 +33,7 @@ func main() {
 		os.Exit(2)
 	}
 
-	request, err := createRequest(configs.AppSlug, requestBody)
+	request, err := createRequest(configs.APIToken, configs.AppSlug, requestBody)
 	if err != nil {
 		log.Errorf("Could not create request, error: %s", err)
 		os.Exit(2)
@@ -83,7 +83,6 @@ func createRequestBodyFromConfigs(configs ConfigsModel) ([]byte, error) {
 	requestModel := RequestModel{
 		HookInfo: HookInfoModel{
 			Type:     "bitrise",
-			APIToken: configs.APIToken,
 		},
 		BuildParams: BuildParamsModel{
 			Branch:                   configs.Branch,
@@ -105,11 +104,13 @@ func createRequestBodyFromConfigs(configs ConfigsModel) ([]byte, error) {
 	return json.Marshal(requestModel)
 }
 
-func createRequest(appSlug string, body []byte) (*http.Request, error) {
+func createRequest(apiToken string, appSlug string, body []byte) (*http.Request, error) {
 	requestURL := fmt.Sprintf("https://app.bitrise.io/app/%s/build/start.json", appSlug)
 	request, err := http.NewRequest("POST", requestURL, bytes.NewBuffer(body))
 	if request != nil {
 		request.Header.Add("Content-Type", "application/json")
+		request.Header.Add("accept", "application/json")
+		request.Header.Add("Authorization", apiToken)
 	}
 	return request, err
 }
